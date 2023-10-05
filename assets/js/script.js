@@ -8,11 +8,14 @@ var endHour = 17;
 endHour++; // increment the end hour by one for the true end hour.
 
 $(function () {
-  var isoDate = dayjs().format("YYYY-MM-DD");
+  var isoDate = dayjs().format("YYYY-MM-DD"); // we use the ISO8601 date format to store the date. 
+
+  // initializing the event object. 
   var localCalendarEvents = {
     date: isoDate,
     events: [],
   };
+
   // Displays the current date in the header of the page.
   function displayDate() {
     var today = dayjs().format("dddd, MMMM D, YYYY");
@@ -37,14 +40,14 @@ $(function () {
       localStorage.getItem("storedCalendarEvents")
     );
     if (
-      storedCalendarEvents !== null &&
-      storedCalendarEvents.date === isoDate
+      storedCalendarEvents !== null &&  // make sure there is something stored
+      storedCalendarEvents.date === isoDate // make sure we only load events from today
     ) {
-      console.log("loaded saved events!");
-      localCalendarEvents = storedCalendarEvents;
+      console.log("loaded saved events!"); // for debugging
+      localCalendarEvents = storedCalendarEvents; // create the local event table
     } else {
-      console.log("clearing and initializing events!");
-      for (i = 0; i < 24; i++) {
+      console.log("clearing and initializing events!"); // for debugging
+      for (i = 0; i < 24; i++) {  // we use 24 hours to keep the hour-# IDs in-line with the index of this array.
         localCalendarEvents.events[i] = " ";
       }
       saveCalendarItems(); // call the save function to make sure it's updated if we reset.
@@ -60,6 +63,7 @@ $(function () {
       calendar = dayjs().hour(i);
       calendarHour = Number(dayjs(calendar).format("H")); //forcing a number for relativeTime calculation
 
+      // calculating the relative time and setting the variable for the class attribute
       if (currentHour == calendarHour) {
         relativeTime = "present";
       } else if (currentHour > calendarHour) {
@@ -67,6 +71,7 @@ $(function () {
       } else {
         relativeTime = "future";
       }
+      // we insert a mess of HTML as a string, adding in the specific variables and text. 
       var calendarHourHtmlstring =
         '<div id="hour-' +
         i + //using the hour to set the ID
@@ -74,12 +79,10 @@ $(function () {
         relativeTime + //setting past/present/future
         '">' +
         '<div class="col-2 col-md-1 hour text-center py-3">' +
-        dayjs(calendar).format("h A") + //adding the text description
+        dayjs(calendar).format("h A") + //adding the hour to the box
         "</div>" +
-        '<textarea class="col-8 col-md-10 description" rows="3">' + // TODO: Add code to get any user input that was saved in localStorage and set
-        // the values of the corresponding textarea elements. HINT: How can the id
-        // attribute of each time-block be used to do this?
-        localCalendarEvents.events[i] +
+        '<textarea class="col-8 col-md-10 description" rows="3">' + 
+        localCalendarEvents.events[i] + // fill in the text area with the saved text corresponding to this hour. 
         "</textarea>" +
         '<button class="btn saveBtn col-2 col-md-1" aria-label="save">' +
         '<i class="fas fa-save" aria-hidden="true"></i></button>' +
@@ -88,14 +91,9 @@ $(function () {
       $("#calendar-container").append(calendarHourHtmlstring);
     }
   }
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
 
-  //event listener for buttons. Checks the ID of the button's parent and passes the text content to be stored in the corresponding field.
+  // event listener for buttons. Checks the ID of the button's parent and passes the text 
+  // content to be stored in the corresponding index of the events array in the event object.
   $(document).on("click", "button", function () {
     var localID = Number(String($(this).parent().attr("id")).substring(5));
     console.log(localID);
@@ -104,7 +102,6 @@ $(function () {
       .siblings(".description")
       .val();
 
-    console.log($(this).siblings("textarea").val());
     saveCalendarItems();
   });
 
