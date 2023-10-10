@@ -1,11 +1,5 @@
 # 05 Third-Party APIs: Work Day Scheduler
 
-## Your Task
-
-Create a simple calendar application that allows a user to save events for each hour of a typical working day (9am&ndash;5pm) by modifying starter code. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.
-
-You'll need to use the [Day.js](https://day.js.org/en/) library to work with date and time. Be sure to read the documentation carefully and concentrate on using Day.js in the browser.
-
 ## User Story
 
 ```md
@@ -32,68 +26,17 @@ WHEN I refresh the page
 THEN the saved events persist
 ```
 
-The following animation demonstrates the application functionality:
+## Application
 
-<!-- @TODO: create ticket to review/update image) -->
-![A user clicks on slots on the color-coded calendar and edits the events.](./Assets/05-third-party-apis-homework-demo.gif)
+The application is housed at https://shagomir.github.io/Simple-Calendar-Application/
 
-## Grading Requirements
+![](./assets/screenshot.PNG)
 
-> **Note**: If a Challenge assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
->
-> * A repository that has no code
->
-> * A repository that includes a unique name but nothing else
->
-> * A repository that includes only a README file but nothing else
->
-> * A repository that only includes starter code
+## Developer Commentary
 
-This Challenge is graded based on the following criteria:
+This app was created to simply and quickly create a calendar with the needed elements. Since everything stays on the page, I determined the easiest way to load it was to dynamically create the elements for each calendar block using the hours and a loop to ensure that everything came out looking okay. I also used day.js to generate the time and calendar elements to ensure they were correct and consistent. 
 
-### Technical Acceptance Criteria: 40%
+For the save function, it checks to see if it is a new day or if the data is blank, and will re-generate the stored calendar object if it is. If it is the same day and there are tasks, they will be loaded in during the creation loop. 
 
-* Satisfies all of the above acceptance criteria plus the following:
+The save buttons use event delegation and jquery navigate the DOM, store the text in the calendar object, and then save the object to local memory. 
 
-  * Uses a date utility library to work with date and time
-
-### Deployment: 32%
-
-* Application deployed at live URL
-
-* Application loads with no errors
-
-* Application GitHub URL submitted
-
-* GitHub repo contains application code
-
-### Application Quality: 15%
-
-* Application user experience is intuitive and easy to navigate
-
-* Application user interface style is clean and polished
-
-* Application resembles the mock-up functionality provided in the Challenge instructions
-
-### Repository Quality: 13%
-
-* Repository has a unique name
-
-* Repository follows best practices for file structure and naming conventions
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages
-
-* Repository contains quality README file with description, screenshot, and link to deployed application
-
-## Review
-
-You are required to submit the following for review:
-
-* The URL of the deployed application
-
-* The URL of the GitHub repository, with a unique name and a README describing the project
-
-- - -
-© 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.
